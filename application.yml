@@ -1,6 +1,9 @@
-server: # REST and WS server
+server:
   port: 80
   address: 0.0.0.0
+spring:
+  main:
+    banner-mode: log
 lavalink:
   server:
     password: "ILoveHatsuneMiku"
@@ -14,7 +17,7 @@ lavalink:
       http: true
       local: false
     bufferDurationMs: 400
-    youtubePlaylistLoadLimit: 6 # Number of pages at 100 each
+    youtubePlaylistLoadLimit: 3
     youtubeSearchEnabled: true
     soundcloudSearchEnabled: true
     gc-warnings: true
@@ -26,11 +29,12 @@ metrics:
 
 sentry:
   dsn: ""
+
 logging:
   file:
-    max-history: 30
-    max-size: 1GB
-  path: ./logs/
+    max-history: 1
+    max-size: 3MB
+  path: /app/logs/
 
   level:
     root: INFO
