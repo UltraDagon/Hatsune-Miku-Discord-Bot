@@ -2,7 +2,6 @@
 import os
 import discord
 import asyncio
-import dotenv
 from keep_alive import keep_alive
 
 import random
