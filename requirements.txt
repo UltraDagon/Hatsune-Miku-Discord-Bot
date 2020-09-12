@@ -1,5 +1,7 @@
-discord.py
+discord
 flask
 asyncio
 termcolor
 pytz
+aiohttp
+lavalink

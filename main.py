@@ -6,12 +6,14 @@ import asyncio
 import aiohttp
 from io import BytesIO
 from keep_alive import keep_alive
+from discord.ext import commands
 
 import random
 import datetime, pytz
 from termcolor import colored
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='%')
+client = bot
 
 
 # :Keep at top
@@ -20,7 +22,7 @@ class Bot:
     fill = 1
 
     images = {
-        "waving" : "https://hatsunemiku-bot.weebly.com/uploads/4/6/4/8/46482037/waving_orig.png"
+        "waving": "https://hatsunemiku-bot.weebly.com/uploads/4/6/4/8/46482037/waving_orig.png"
     }
 
 
@@ -29,6 +31,7 @@ async def get_image(image):
         async with session.get(Bot.images.get(image)) as resp:
             data = BytesIO(await resp.read())
             return data
+
 
 @client.event
 async def status_task():
@@ -43,9 +46,12 @@ async def on_ready():
     print(colored(("Ready at " + str(datetime.datetime.now(pytz.timezone("US/Central")))[:-13] + "\n\n"), "cyan",
                   attrs=['bold']))
 
+    bot.load_extension('cogs.music')
+
 
 @client.event
 async def on_message(msg):
+    await bot.process_commands(msg)
     # Puts discord message into console
     print("\n\n" + str(datetime.datetime.now(pytz.timezone("US/Central")))[:-13] + " - " + str(
         msg.author) + " in [" + str(msg.guild) + "] - #" + str(msg.channel) + ":")
