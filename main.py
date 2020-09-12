@@ -64,7 +64,7 @@ async def hello(msg):
 
 MusicBot = bot
 MusicBot.music = lavalink.Client(754169016087478302)  # Bot's user id
-MusicBot.music.add_node("localhost", 7000, "ILoveHatsuneMiku", "na", "music-node")
+MusicBot.music.add_node("localhost", 80, "ILoveHatsuneMiku", "na", "music-node")
 MusicBot.add_listener(MusicBot.music.voice_update_handler, "on_socket_response")
 
 
