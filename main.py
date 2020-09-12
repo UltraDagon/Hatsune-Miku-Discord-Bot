@@ -2,6 +2,7 @@
 import os
 import discord
 import asyncio
+import dotenv
 from keep_alive import keep_alive
 
 import random
@@ -11,11 +12,10 @@ from termcolor import colored
 client = discord.Client()
 
 
-#:Keep at top
+# :Keep at top
 
-# Used to store global variables
-class bot:
-    filler=1
+class Bot:
+    fill = 1
 
 
 @client.event
@@ -41,9 +41,13 @@ async def on_message(msg):
     if client.user == msg.author:
         return
 
+    if msg.content[0] == '%':
+        cmd = str(msg.content)[1:].lower().splitlines()
+
+        if cmd[0] in ["hello", "hi"]:
+            await msg.channel.send("Hello!")
 
 # Keep this at the end
 keep_alive()
-token = os.environ.get('DISCORD_BOT_SECRET')
-print(token)
+# token = os.environ.get('DISCORD_BOT_SECRET')  # Not working idk why
 client.run("NzU0MTY5MDE2MDg3NDc4MzAy.X1w0oQ.xDU-mx1UbRLQZO4jJiiQFb1vSlw")
