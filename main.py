@@ -54,7 +54,7 @@ async def on_message(msg):
         return
 
     if msg.author.id == 254364268789628938 and msg.content == ">%forcestop":
-        await client
+        await msg.delete()
         await client.close()
         print(colored("\n\nBot was force stopped.\n\n", "red", attrs=['bold']))
 
