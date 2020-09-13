@@ -5,3 +5,4 @@ termcolor
 pytz
 aiohttp
 lavalink
+psutil

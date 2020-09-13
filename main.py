@@ -5,6 +5,7 @@ import discord
 import asyncio
 import aiohttp
 import lavalink
+import psutil
 from io import BytesIO
 from keep_alive import keep_alive
 from discord.ext import commands
@@ -53,6 +54,7 @@ async def on_message(msg):
         return
 
     if msg.author.id == 254364268789628938 and msg.content == ">%forcestop":
+        await client
         await client.close()
         print(colored("\n\nBot was force stopped.\n\n", "red", attrs=['bold']))
 
@@ -71,14 +73,17 @@ MusicBot.add_listener(MusicBot.music.voice_update_handler, "on_socket_response")
 @bot.command(name='join')
 async def join(ctx):
     print('join command worked')
-    member = utils.find(lambda m: m.id == ctx.author.id, ctx.guild.members)
-    if member is not None and member.voice is not None:
-        vc = member.voice.channel
-        print(vc)
-        player = MusicBot.music.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
-        if not player.is_connected:
-            player.store('channel', ctx.channel.id)
-            await connect_to(ctx.guild.id, str(vc.id))
+    try:
+        member = utils.find(lambda m: m.id == ctx.author.id, ctx.guild.members)
+        if member is not None and member.voice is not None:
+            vc = member.voice.channel
+            print(vc)
+            player = MusicBot.music.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
+            if not player.is_connected:
+                player.store('channel', ctx.channel.id)
+                await connect_to(ctx.guild.id, str(vc.id))
+    except():
+        await ctx.channel.send("Uh oh! There was an error joining the voice channel! This is most likely due the bot being run on Heroku, which doesn't support music bots. All other commands will work.")
 
 
 async def track_hook(event):
